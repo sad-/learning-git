@@ -2,44 +2,70 @@
 /* @author: sad */
 #include <stdio.h>
 
-float convert( float val, char unit)
+const int UNIT_SIZE = 12;
+
+int convert( float* ret, float val, char unit)
 {
 	if (unit == 'c' || unit == 'C') 
 	{
-		return ((val / 0.5556) + 32);
+		*ret = ((val / 0.5556) + 32);
+		return 0;
 	}
 	if (unit == 'f' || unit == 'F')
 	{
-		return ((val - 32) * 0.5556);
+		*ret =  ((val - 32) * 0.5556);
+		return 0;
+	}
+	
+	if (unit == 'k' || unit == 'K')
+	{
+		printf("Error: currently does not support temperatures in Kelvin\n");
 	}
 	else
 	{
-		printf("Error: incorrect unit\n");
-		return 0.0;
+		printf("Error: invalid unit\n");
 	}
+	return -1;
 }
 
-char switchUnit(char unit)
+void switchUnit(char* str, char unit)
 {
 	if (unit == 'f' || unit == 'F')
 	{
-		return 'C';
+		sprintf(str, "Celsius");
 	}
 	if (unit == 'c' || unit == 'C')
 	{
-		return 'F';
+		sprintf(str, "Fahrenheit");
 	}
 }
 
+
 int main(){
 	float x;
+	float retval;
 	char y;
+	char error;
 
 	printf( "Please enter the temperature: " );
 	scanf( "%f", &x );
-	getchar();
+	error = getchar();
+	if (error != '\n')
+	{
+		printf("Invalid input\n");
+		printf("Try entering only the digits of temperature\n");
+		return -1;
+	}
 	printf( "Please enter the unit: ");
   	y = getchar();
-  	printf( "The temperature in %c is %f\n", switchUnit(y), convert(x, y));
-  	return 0;
+	
+	char unit[UNIT_SIZE];
+	switchUnit(unit, y);
+	
+	int conversion = convert(&retval, x, y);
+	if (!conversion)
+	{
+		printf( "The temperature in %s is %f\n", unit, retval);	
+	}
+  	return conversion;
 }

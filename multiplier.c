@@ -1,3 +1,6 @@
+/* Multiplies two given inputs */
+/* @author: sad */
+
 #include <stdio.h>
 
 int mult ( int x, int y );
