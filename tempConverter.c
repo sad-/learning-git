@@ -1,4 +1,7 @@
-/* converts from degree celsius to fahrenheit and vice versa. */
+/* converts from degree celsius to fahrenheit and vice versa.
+ * program will die if given wrong/invalid inputs :(
+ */
+
 /* @author: sad */
 #include <stdio.h>
 
